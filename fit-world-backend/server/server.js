@@ -1,17 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const PORT = 7777;
 
 app.use(express.json());
 app.use(cors());
 
-// Endpoint GET dla pobrania danych
-app.get("/api/dane", (req, res) => {
-	res.json({ message: "Pobrane dane z backendu" });
+app.post("/register", (req, res) => {
+	const { userName, password, email } = req.body;
+	res.json({ success: true, message: `User ${userName} registered successfully!` });
 });
 
-// Endpoint POST dla przesyłania danych
-app.post("/api/dane", (req, res) => {
-	console.log("Dane otrzymane:", req.body);
-	res.json({ message: "Dane przesłane do backendu" });
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
 });

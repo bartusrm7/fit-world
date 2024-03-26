@@ -53,7 +53,7 @@ function LogReg() {
 		login.classList.toggle("display-none");
 	}
 	function userData() {
-		fetch("http://localhost:5173/login", {
+		fetch("http://localhost:7777/login", {
 			method: "POST",
 			headers: {
 				"Content-type": "Application/JSON",
@@ -75,7 +75,7 @@ function LogReg() {
 			});
 	}
 	function registerUser() {
-		fetch("http://localhost:5173/register", {
+		fetch("http://localhost:7777/register", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -100,7 +100,7 @@ function LogReg() {
 		<div>
 			<div className='log-reg'>
 				<div className='login-icon' onClick={openLoginWindow}>
-					<span class='material-symbols-outlined'>person</span>
+					<span className='material-symbols-outlined'>person</span>
 					<p>Sign In</p>
 				</div>
 
