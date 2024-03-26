@@ -1,11 +1,11 @@
 import FetchNutritionData from "./FetchNutritionData.jsx";
-import LogReg from "./LogReg";
+import LogReg from "./LogReg.jsx";
 
 function App() {
 	return (
 		<>
-			<FetchNutritionData />
 			<LogReg />
+			{/* <FetchNutritionData /> */}
 		</>
 	);
 }

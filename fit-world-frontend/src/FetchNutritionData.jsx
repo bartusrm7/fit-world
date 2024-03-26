@@ -7,6 +7,7 @@ const FetchNutritionData = async () => {
 			throw new Error("Response not OK");
 		}
 		const data = await response.json();
+		// Tutaj możesz przetworzyć dane lub wywołać funkcję, która je wykorzystuje
 		return data;
 	} catch (error) {
 		console.error("Wystąpił błąd podczas pobierania danych:", error);
@@ -15,3 +16,4 @@ const FetchNutritionData = async () => {
 };
 
 export default FetchNutritionData;
+ 
