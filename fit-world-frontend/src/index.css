@@ -1,0 +1,112 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: "Roboto", sans-serif;
+	background-image: radial-gradient(
+		circle farthest-corner at 10% 20%,
+		rgba(37, 145, 251, 0.98) 0.1%,
+		rgba(0, 7, 128, 1) 99.8%
+	);
+}
+
+/* LOGIN/REGISTER */
+.login-icon {
+	position: fixed;
+	top: 0;
+	right: 0;
+	padding: 0.5em;
+	margin: 1em;
+	color: white;
+	cursor: pointer;
+}
+.login-icon .material-symbols-outlined {
+	font-size: 3rem;
+}
+.log-reg-window {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 300px;
+	height: 350px;
+	display: none;
+	background-color: black;
+	border-radius: 20px;
+	z-index: 1;
+}
+.login-label,
+.register-label {
+	margin: 1em 0;
+	color: white;
+	text-align: center;
+}
+.input-container {
+	margin: 1.5em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.input-container input,
+button {
+	padding: 0.3em 0.5em;
+	margin: 0.5em 0;
+	background-color: white;
+	border-radius: 8px;
+}
+.input-container button {
+	padding: 0.3em 2em;
+	margin: 1.5em;
+	cursor: pointer;
+}
+.register {
+	display: none;
+}
+.switch-reg,
+.switch-log {
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	padding: 0.3em 1.5em;
+	transform: translateX(-50%);
+	cursor: pointer;
+}
+.display-block {
+	display: block;
+}
+.display-none {
+	display: none;
+}
+
+/* CONTAINER */
+.main-window-container {
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+.main-window {
+	width: 900px;
+	height: 600px;
+	background-color: #fff;
+	border-radius: 20px;
+}
+.main-buttons-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+.main-buttons-container button {
+	width: 100%;
+	padding: 0.5em 0;
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}
