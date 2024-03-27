@@ -44,6 +44,11 @@ body {
 	border-radius: 20px;
 	z-index: 1;
 }
+.login-window,
+.register-window {
+	color: white;
+	text-align: center;
+}
 .login-label,
 .register-label {
 	margin: 1em 0;
@@ -67,9 +72,6 @@ button {
 	padding: 0.3em 2em;
 	margin: 1.5em;
 	cursor: pointer;
-}
-.register {
-	display: none;
 }
 .switch-reg,
 .switch-log {

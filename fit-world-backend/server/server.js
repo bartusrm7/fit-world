@@ -8,6 +8,12 @@ app.use(cors());
 
 app.post("/login", (req, res) => {
 	const { userName, password } = req.body;
+	const user = userData.find(user => user.userName === userName && user.password === password);
+	if (user) {
+		res.status(200).json({ succes: true, message: "Login successful!" });
+	} else {
+		res.status(401).json({ succes: false, message: "Invalid login or password" });
+	}
 });
 
 app.get("/register", (req, res) => {

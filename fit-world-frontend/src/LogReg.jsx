@@ -52,7 +52,45 @@ function LogReg() {
 		register.classList.toggle("display-block");
 		login.classList.toggle("display-none");
 	}
+	function infoAfterSuccesLogin() {
+		const login = document.querySelector(".login-window");
+		const hideWindowLog = document.querySelector(".hide-window-log");
+		const infoLog = document.createElement("p");
+		const logOutBtn = document.createElement("button");
+
+		infoLog.style.margin = "4em 0 2em";
+		logOutBtn.innerHTML = "Log out";
+		logOutBtn.style.cursor = "pointer";
+		hideWindowLog.classList.add("display-none");
+		infoLog.innerHTML = `You logged as <span style="color:palevioletred;font-weight: bold">${data.login}</span>!`;
+		login.append(infoLog, logOutBtn);
+
+		logOutBtn.addEventListener("click", () => {
+			hideWindowLog.classList.remove("display-none");
+			infoLog.innerHTML = "";
+			login.removeChild(logOutBtn, infoLog);
+		});
+	}
+	function infoAfterSuccesRegistered() {
+		const register = document.querySelector(".register-window");
+		const hideWindowReg = document.querySelector(".hide-window-reg");
+		const infoReg = document.createElement("p");
+
+		if (!data.email.includes("@") || !data.email.includes(".")) {
+			console.error("Invalid email address! Please enter a valid email address!");
+			return;
+		}
+
+		infoReg.style.margin = "4em 0";
+		hideWindowReg.classList.add("display-none");
+		infoReg.innerHTML = `The user <span style="color:palevioletred;font-weight: bold">${data.login}</span> has been created!`;
+		register.appendChild(infoReg);
+	}
 	function userLogin() {
+		if (data.login === "" || data.password === "") {
+			console.error("Some input is empty! Complete the data!");
+			return;
+		}
 		fetch("http://localhost:7777/login", {
 			method: "POST",
 			headers: {
@@ -62,7 +100,12 @@ function LogReg() {
 		})
 			.then(response => {
 				if (response.ok) {
+					infoAfterSuccesLogin();
 					return response.json();
+				} else if (response.status === 401) {
+					return response.json().then(data => {
+						throw new Error(data.message);
+					});
 				} else {
 					console.error("Failed to fetch:", response.statusText);
 				}
@@ -75,6 +118,10 @@ function LogReg() {
 			});
 	}
 	function registerUser() {
+		if (data.login === "" || data.password === "" || data.email === "") {
+			console.error("Some input is empty! Complete the data!");
+			return;
+		}
 		fetch("http://localhost:7777/register", {
 			method: "POST",
 			headers: {
@@ -84,7 +131,12 @@ function LogReg() {
 		})
 			.then(response => {
 				if (response.ok) {
+					infoAfterSuccesRegistered();
 					return response.json();
+				} else if (response.status === 400) {
+					return response.json().then(data => {
+						throw new Error(data.message);
+					});
 				} else {
 					console.error("Failed to register:", response.statusText);
 				}
@@ -108,15 +160,17 @@ function LogReg() {
 
 				<div className='login-window log-reg-window'>
 					<p className='login-label'>Login</p>
-					<form onSubmit={handleSubmit}>
-						<div className='input-container'>
-							<input type='text' placeholder='Login' value={data.login} onChange={handleLoginChange} />
-							<input type='password' placeholder='Password' value={data.password} onChange={handlePasswordChange} />
-							<button className='login-btn' type='submit' onClick={userLogin}>
-								Login
-							</button>
-						</div>
-					</form>
+					<div className='hide-window-log'>
+						<form onSubmit={handleSubmit}>
+							<div className='input-container'>
+								<input type='text' placeholder='Login' value={data.login} onChange={handleLoginChange} />
+								<input type='password' placeholder='Password' value={data.password} onChange={handlePasswordChange} />
+								<button className='login-btn' type='submit' onClick={userLogin}>
+									Login
+								</button>
+							</div>
+						</form>
+					</div>
 
 					<button className='switch-reg' onClick={switchLogReg}>
 						Create Account
@@ -125,8 +179,8 @@ function LogReg() {
 			</div>
 
 			<div className='register-window log-reg-window'>
-				<div className='register-window'>
-					<p className='register-label'>Register</p>
+				<p className='register-label'>Register</p>
+				<div className='hide-window-reg'>
 					<form onSubmit={handleSubmit}>
 						<div className='input-container'>
 							<input type='text' placeholder='Login' value={data.login} onChange={handleLoginChange} />
@@ -138,11 +192,11 @@ function LogReg() {
 							</button>
 						</div>
 					</form>
-
-					<button className='switch-log' onClick={switchLogReg}>
-						Login
-					</button>
 				</div>
+
+				<button className='switch-log' onClick={switchLogReg}>
+					Login
+				</button>
 			</div>
 		</div>
 	);
