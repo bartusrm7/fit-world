@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function LogReg() {
-	const [data, setData] = useState({ login: "", password: "", email: "", isRegistering: false });
+	const [data, setData] = useState({ login: "", password: "", email: "", isRegistering: false, isLoggedIn: false });
 
 	useEffect(() => {
 		if (data.isRegistering) {
@@ -34,7 +34,7 @@ function LogReg() {
 		} else {
 			console.log("Login data:", data);
 		}
-		setData({ login: "", password: "", email: "", isRegistering: false });
+		setData({ login: "", password: "", email: "", isRegistering: false, isLoggedIn: false });
 	}
 	function handleRegisterIsTrue() {
 		setData(prevData => ({
@@ -52,7 +52,7 @@ function LogReg() {
 		register.classList.toggle("display-block");
 		login.classList.toggle("display-none");
 	}
-	function userData() {
+	function userLogin() {
 		fetch("http://localhost:7777/login", {
 			method: "POST",
 			headers: {
@@ -91,11 +91,13 @@ function LogReg() {
 			})
 			.then(responseData => {
 				console.log(responseData);
+				setData({ login: "", password: "", email: "", isRegistering: false, isLoggedIn: false });
 			})
 			.catch(error => {
 				console.error("error", error);
 			});
 	}
+
 	return (
 		<div>
 			<div className='log-reg'>
@@ -110,7 +112,7 @@ function LogReg() {
 						<div className='input-container'>
 							<input type='text' placeholder='Login' value={data.login} onChange={handleLoginChange} />
 							<input type='password' placeholder='Password' value={data.password} onChange={handlePasswordChange} />
-							<button className='login-btn' type='submit' onClick={userData}>
+							<button className='login-btn' type='submit' onClick={userLogin}>
 								Login
 							</button>
 						</div>
