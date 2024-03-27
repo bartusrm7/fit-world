@@ -89,8 +89,9 @@ button {
 	display: none;
 }
 
-/* CONTAINER */
-.main-window-container {
+/* MAIN-CONTAINER */
+
+.main {
 	display: none;
 	justify-content: center;
 	align-items: center;
