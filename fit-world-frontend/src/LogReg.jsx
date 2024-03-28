@@ -44,7 +44,9 @@ function LogReg() {
 	}
 	function openLoginWindow() {
 		const loginWindow = document.querySelector(".login-window");
+		const shadowBackground = document.querySelector(".shadow-background");
 		loginWindow.classList.toggle("display-block");
+		shadowBackground.classList.toggle("display-none");
 	}
 	function switchLogReg() {
 		const register = document.querySelector(".register-window");
@@ -198,6 +200,7 @@ function LogReg() {
 					Login
 				</button>
 			</div>
+			<div className='shadow-background display-none'></div>
 		</div>
 	);
 }
