@@ -92,24 +92,68 @@ button {
 /* MAIN-CONTAINER */
 
 .main {
-	display: none;
+	/* display: none; */
 	justify-content: center;
 	align-items: center;
 }
 .main-window {
 	width: 900px;
 	height: 600px;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 0.75);
 	border-radius: 20px;
 }
-.main-buttons-container {
+.main-grid-container {
+	padding: 1em;
+	height: 100%;
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(9, 1fr);
 }
-.main-buttons-container button {
-	width: 100%;
+.main-grid-items {
 	padding: 0.5em 0;
-	background-color: black;
-	color: white;
-	cursor: pointer;
+	margin: 0.1em;
+	background-color: blue;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.item1 {
+	grid-row: 1/5;
+	grid-column: 1/4;
+}
+.item1 input {
+	padding: 0.25em;
+	margin: 1em 0.5em;
+	border-radius: 7px;
+}
+.item1 button {
+	padding: 0.25em 0.65em;
+	font-weight: bold;
+}
+
+.item2 {
+	grid-row: 1/4;
+	grid-column: 4/7;
+}
+.item3 {
+	grid-row: 1/6;
+	grid-column: 7/11;
+	background-color: purple;
+}
+.item4 {
+	grid-row: 4/7;
+	grid-column: 4/7;
+	background-color: white;
+}
+.item5 {
+	grid-row: 5/10;
+	grid-column: 1/4;
+}
+.item6 {
+	grid-row: 7/10;
+	grid-column: 4/7;
+}
+.item7 {
+	grid-row: 6/10;
+	grid-column: 7/11;
 }
