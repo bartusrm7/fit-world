@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FetchNutritionData from "./FetchNutritionData";
 
 function MainContainer() {
 	const [food, setFood] = useState([]);
@@ -19,7 +20,7 @@ function MainContainer() {
 		const months = { month: "long" };
 		const month = d.toLocaleDateString("en-gb", months);
 		const day = String(d.getDate()).padStart(2, 0);
-		const fullDate = `${day}.${month}.${year} `;
+		const fullDate = `${day}.${month}.${year}`;
 		return fullDate;
 	}
 
@@ -35,7 +36,7 @@ function MainContainer() {
 						</button>
 						<ul className='food-container'>
 							{food.map((food, index) => (
-								<li key={index}>{food}</li>
+								<li key={index}>- {food}</li>
 							))}
 						</ul>
 					</div>
