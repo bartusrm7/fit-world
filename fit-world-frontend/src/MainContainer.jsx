@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from "react";
-import FetchNutritionData from "./FetchNutritionData";
 
 function MainContainer() {
 	const [food, setFood] = useState([]);
 	const [foodInput, setFoodInput] = useState("");
 
-	function addFood() {
-		if (foodInput !== "") {
-			setFood([...food, foodInput]);
+	const addFood = async () => {
+		try {
+			const response = await fetch(`https://api.api-ninjas.com/v1/nutrition?query=${foodInput}`, {
+				headers: {
+					"X-Api-Key": "mlvXoPbZRa8k/+ScMmOVRg==PUD4iZkUyiLlux6I",
+					"Content-type": "application/json",
+				},
+			});
+			if (!response.ok) {
+				throw new Error("Network is not working!");
+			}
+			const data = await response.json();
+			console.log(data);
+			setFood([...food, data]);
 			setFoodInput("");
+		} catch (error) {
+			console.error("Error searching the food:", error);
 		}
-	}
+	};
 	function handleFoodInputChange(e) {
 		setFoodInput(e.target.value);
 	}
@@ -20,7 +32,7 @@ function MainContainer() {
 		const months = { month: "long" };
 		const month = d.toLocaleDateString("en-gb", months);
 		const day = String(d.getDate()).padStart(2, 0);
-		const fullDate = `${day}.${month}.${year}`;
+		const fullDate = `${day}  ${month} ${year}`;
 		return fullDate;
 	}
 
@@ -36,7 +48,7 @@ function MainContainer() {
 						</button>
 						<ul className='food-container'>
 							{food.map((food, index) => (
-								<li key={index}>- {food}</li>
+								<li key={index}>- {food.name}</li>
 							))}
 						</ul>
 					</div>
