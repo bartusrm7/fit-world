@@ -117,8 +117,8 @@ button {
 	padding: 0.6em;
 	height: 100%;
 	display: grid;
-	grid-template-columns: repeat(10, 1fr);
-	grid-template-rows: repeat(9, 1fr);
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(11, 1fr);
 }
 .main-grid-items {
 	padding: 0.5em 0;
@@ -127,14 +127,19 @@ button {
 	text-align: center;
 }
 .item1 {
-	grid-row: 1/6;
-	grid-column: 1/4;
+	grid-row: 1/7;
+	grid-column: 1/5;
 	background-color: #7cff5b;
 }
 .item1 input {
 	padding: 0.25em;
-	margin: 1em 0.5em;
-	border-radius: 7px;
+	margin: 1em;
+}
+.item1 input,
+button {
+	background-color: white;
+	box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.15), -1px -1px 3px -1px rgba(0, 0, 0, 0.7);
+	border-radius: 6px;
 }
 .item1 button {
 	padding: 0.25em 0.65em;
@@ -146,11 +151,19 @@ button {
 	text-align-last: left;
 }
 .food-container li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	list-style: none;
+}
+.food-container li .remove-food-btn {
+	padding: 0.1em 0.5em;
+	font-weight: normal;
+	background-color: rgb(146, 255, 222);
 }
 .item2 {
 	grid-row: 1/4;
-	grid-column: 4/7;
+	grid-column: 5/8;
 	background-color: #ff8b55;
 }
 .item2 div {
@@ -158,67 +171,81 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 1.6rem;
+	font-size: 1.5rem;
 }
 .total-calories-per-day {
 }
 .item3 {
-	grid-row: 1/6;
-	grid-column: 7/11;
+	display: block;
+	grid-row: 1/7;
+	grid-column: 8/13;
 	background-color: rgb(192, 64, 192);
 }
 .label-and-date-container-item3 {
 	display: flex;
 	justify-content: space-evenly;
 }
-.circle-calories-container {
-	height: 70%;
+.container-of-third-place {
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 }
-.outer {
-	padding: 20px;
-	width: 160px;
-	height: 160px;
-	border-radius: 50%;
-	background-color: white;
-	box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.15), -1px -1px 10px -1px rgba(0, 0, 0, 0.7);
-}
-.inner {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
-	background-color: rgb(192, 64, 192);
-	box-shadow: inset 4px 3px 6px 2px rgba(0, 0, 0, 0.2), inset -2px -1px 6px -2px rgba(0, 0, 0, 0.7);
-}
-
-.macronutrients-container {
-	display: flex;
-	justify-content: space-evenly;
-}
-.macronutrients-container p {
+.progress-calories-container {
 	display: flex;
 	flex-direction: column;
 }
+.progress-container {
+}
+.outer {
+	margin: 10px 0;
+	width: 120px;
+	height: 160px;
+	display: flex;
+	align-items: end;
+	background-color: white;
+	box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.15), -1px -1px 10px -1px rgba(0, 0, 0, 0.7);
+	border-radius: 8px;
+	overflow: hidden;
+}
+.inner {
+	width: 100%;
+	background-color: rgb(154, 154, 255);
+}
+.macronutrients-container {
+	margin: 0.5em 0;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.macronutrients-container div {
+	margin: 0.75em 0;
+}
+.progress-macronutrients {
+	margin: 5px 0;
+	width: 130px;
+	height: 20px;
+	background-color: white;
+	box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.15), -1px -1px 10px -1px rgba(0, 0, 0, 0.7);
+	border-radius: 6px;
+}
 .item4 {
 	grid-row: 4/7;
-	grid-column: 4/7;
-	background-color: rgb(204, 173, 173);
+	grid-column: 5/8;
+	background-color: #ff4a4a;
 }
 .item5 {
-	grid-row: 6/10;
+	grid-row: 7/12;
 	grid-column: 1/4;
 	background-color: #f2ff7c;
 }
 .item6 {
-	grid-row: 7/10;
+	grid-row: 7/12;
 	grid-column: 4/7;
-	background-color: #ff4a4a;
+	background-color: rgb(204, 173, 173);
 }
 .item7 {
-	grid-row: 6/10;
-	grid-column: 7/11;
+	grid-row: 7/12;
+	grid-column: 7/13;
 	background-color: #42b3ff;
 }
 .days {
@@ -230,4 +257,13 @@ button {
 .day {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+}
+.progress-day-of-calories {
+	margin: 0.5em 0;
+	width: 25px;
+	height: 150px;
+	background-color: white;
+	box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.15), -1px -1px 10px -1px rgba(0, 0, 0, 0.7);
+	border-radius: 10px;
 }

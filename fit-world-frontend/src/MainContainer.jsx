@@ -3,7 +3,13 @@ import React, { useState, useEffect } from "react";
 function MainContainer() {
 	const [food, setFood] = useState([]);
 	const [foodInput, setFoodInput] = useState("");
+	const [caloriesConsumed, setCaloriesConsumed] = useState(0);
+	const [caloriesNeeded, setCaloriesNeeded] = useState(2000);
 
+	const percentCaloriesConsumed = Math.round((caloriesConsumed / caloriesNeeded) * 100);
+	function calculateProgress() {
+		return (caloriesConsumed / caloriesNeeded) * 100;
+	}
 	const addFood = async () => {
 		try {
 			const response = await fetch(`https://api.api-ninjas.com/v1/nutrition?query=${foodInput}`, {
@@ -19,10 +25,15 @@ function MainContainer() {
 			console.log(data[0]);
 			setFood([...food, data[0]]);
 			setFoodInput("");
+			setCaloriesConsumed(caloriesConsumed + data[0].calories);
 		} catch (error) {
 			console.error("Error searching the food:", error);
 		}
 	};
+	const createRemoveFoodBtn = () => {
+		return <button className='remove-food-btn'>Remove</button>;
+	};
+	function removeFood() {}
 	function useEnterKey(e) {
 		if (e.key === "Enter") {
 			addFood();
@@ -59,7 +70,9 @@ function MainContainer() {
 						</button>
 						<ul className='food-container'>
 							{food.map((food, index) => (
-								<li key={index}>- {food.name}</li>
+								<li key={index}>
+									- {food.name} {createRemoveFoodBtn()}
+								</li>
 							))}
 						</ul>
 					</div>
@@ -67,7 +80,7 @@ function MainContainer() {
 						<span className='label-of-main-window-parts'>Total Calories</span>
 						<div>
 							<p>
-								<span className='total-calories-per-day'>2500</span>kcal
+								<span className='total-calories-per-day'>2000</span>kcal
 							</p>
 						</div>
 					</div>
@@ -76,85 +89,67 @@ function MainContainer() {
 							<span className='label-of-main-window-parts'>Today Calories</span>
 							<span className='current-calories-day'>{currentDate()}</span>
 						</div>
-						<div className='circle-calories-container'>
-							<div className='outer'>
-								<div className='inner'></div>
+						<div className='container-of-third-place'>
+							<div className='macronutrients-container'>
+								<div>
+									<p className='progress-macronutrients proteins'></p>Proteins
+								</div>
+								<div>
+									<p className='progress-macronutrients carbs'></p>Carbohydrates
+								</div>
+								<div>
+									<p className='progress-macronutrients fats'></p>Fats
+								</div>
 							</div>
-						</div>
-						<div className='macronutrients-container'>
-							<p>
-								P
-								<input type='checkbox' />
-							</p>
-							<p>
-								C<input type='checkbox' />
-							</p>
-							<p>
-								F<input type='checkbox' />
-							</p>
+							<div className='progress-calories-container'>
+								<div className='outer'>
+									<div className='inner' style={{ height: `${calculateProgress()}%` }}></div>
+								</div>
+								<div className='calories-consumed'>{Math.round(caloriesConsumed)}kcal</div>
+								<div className='percent-consumed'>{percentCaloriesConsumed}%</div>
+							</div>
 						</div>
 					</div>
 					<div className='main-grid-items item4'>
-						<span className='label-of-main-window-parts'>Measurements</span>
+						<span className='label-of-main-window-parts'>Burned Calories</span>
 					</div>
 					<div className='main-grid-items item5'>
 						<span className='label-of-main-window-parts'>Favorites Meal</span>
 					</div>
 					<div className='main-grid-items item6'>
-						<span className='label-of-main-window-parts'>Burned Calories</span>
+						<span className='label-of-main-window-parts'>Measurements</span>
 					</div>
 					<div className='main-grid-items item7'>
 						<span className='label-of-main-window-parts'>Weekdays</span>
 						<div className='days'>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Mon
-							</p>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							</div>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Tue
-							</p>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							</div>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Wed
-							</p>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							</div>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Thu
-							</p>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							</div>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Fri
-							</p>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							</div>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Sat
-							</p>
-							<p className='day'>
-								{" "}
-								<span className='progress-day'>
-									<input type='checkbox' />
-								</span>
+							</div>
+							<div className='day'>
+								<p className='progress-day-of-calories'></p>
 								Sun
-							</p>
+							</div>
 						</div>
 					</div>
 				</div>
