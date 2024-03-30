@@ -5,6 +5,22 @@ function MainContainer() {
 	const [foodInput, setFoodInput] = useState("");
 	const [caloriesConsumed, setCaloriesConsumed] = useState(0);
 	const [caloriesNeeded, setCaloriesNeeded] = useState(2000);
+	const [basicMacroAmount, setBasicMacroAmount] = useState({
+		proteins: 0,
+		carbs: 0,
+		fats: 0,
+	});
+	const [macroNutrientsMax, setMacroNutrientsMax] = useState({
+		proteins: 120,
+		carbs: 250,
+		fats: 50,
+	});
+
+	function updateMarcoNutrients(addedCalories) {
+		// const addedProteins =
+		// const addedCarbs =
+		// const addedFats =
+	}
 
 	const percentCaloriesConsumed = Math.round((caloriesConsumed / caloriesNeeded) * 100);
 	function calculateProgress() {
@@ -22,18 +38,29 @@ function MainContainer() {
 				throw new Error("Network is not working!");
 			}
 			const data = await response.json();
-			console.log(data[0]);
+			const addedCalories = data[0].calories;
+
 			setFood([...food, data[0]]);
 			setFoodInput("");
-			setCaloriesConsumed(caloriesConsumed + data[0].calories);
+
+			setCaloriesConsumed(caloriesConsumed + addedCalories);
 		} catch (error) {
 			console.error("Error searching the food:", error);
 		}
 	};
-	const createRemoveFoodBtn = () => {
-		return <button className='remove-food-btn'>Remove</button>;
+	const createRemoveFoodBtn = index => {
+		return (
+			<button className='remove-food-btn' onClick={() => removeFood(index)}>
+				Remove
+			</button>
+		);
 	};
-	function removeFood() {}
+	function removeFood(index) {
+		const removedFood = food[index];
+		const updateFoodList = food.filter((_, i) => i !== index);
+		setFood(updateFoodList);
+		setCaloriesConsumed(caloriesConsumed - removedFood.calories);
+	}
 	function useEnterKey(e) {
 		if (e.key === "Enter") {
 			addFood();
@@ -51,7 +78,6 @@ function MainContainer() {
 		const fullDate = `${day}  ${month} ${year}`;
 		return fullDate;
 	}
-
 	return (
 		<div className='main'>
 			<div className='main-window'>
@@ -71,17 +97,28 @@ function MainContainer() {
 						<ul className='food-container'>
 							{food.map((food, index) => (
 								<li key={index}>
-									- {food.name} {createRemoveFoodBtn()}
+									- {food.name} {createRemoveFoodBtn(index)}
 								</li>
 							))}
 						</ul>
 					</div>
 					<div className='main-grid-items item2'>
 						<span className='label-of-main-window-parts'>Total Calories</span>
-						<div>
-							<p>
-								<span className='total-calories-per-day'>2000</span>kcal
-							</p>
+						<div className='total-calories-per-day-container'>
+							<div>
+								<p>
+									Calories: <span>2000</span>
+								</p>
+								<p>
+									Proteins: <span>{macroNutrients.proteins}</span>
+								</p>
+								<p>
+									Carbohydrates:<span>{macroNutrients.carbs}</span>
+								</p>
+								<p>
+									Fats: <span>{macroNutrients.fats}</span>
+								</p>
+							</div>
 						</div>
 					</div>
 					<div className='main-grid-items item3'>
@@ -92,13 +129,26 @@ function MainContainer() {
 						<div className='container-of-third-place'>
 							<div className='macronutrients-container'>
 								<div>
-									<p className='progress-macronutrients proteins'></p>Proteins
+									<p className='progress-macronutrients'>
+										<span
+											className='proteins-component food-component'
+											style={{ width: `${macroNutrients.proteins}%` }}></span>
+									</p>
+									Proteins
 								</div>
 								<div>
-									<p className='progress-macronutrients carbs'></p>Carbohydrates
+									<p className='progress-macronutrients'>
+										<span
+											className='carbs-component food-component'
+											style={{ width: `${macroNutrients.carbs}%` }}></span>
+									</p>
+									Carbohydrates
 								</div>
 								<div>
-									<p className='progress-macronutrients fats'></p>Fats
+									<p className='progress-macronutrients'>
+										<span className='fats-component food-component' style={{ width: `${macroNutrients.fats}%` }}></span>
+									</p>
+									Fats
 								</div>
 							</div>
 							<div className='progress-calories-container'>

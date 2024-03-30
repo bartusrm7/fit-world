@@ -166,12 +166,12 @@ button {
 	grid-column: 5/8;
 	background-color: #ff8b55;
 }
-.item2 div {
+.total-calories-per-day-container {
+	margin: 1em 2em;
 	height: 75%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1.5rem;
+	text-align-last: left;
+}
+.total-calories-per-day-container {
 }
 .total-calories-per-day {
 }
@@ -221,11 +221,19 @@ button {
 	margin: 0.75em 0;
 }
 .progress-macronutrients {
+	display: flex;
 	margin: 5px 0;
+	padding: 2px;
 	width: 130px;
 	height: 20px;
 	background-color: white;
 	box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.15), -1px -1px 10px -1px rgba(0, 0, 0, 0.7);
+	border-radius: 6px;
+	overflow: hidden;
+}
+.food-component {
+	height: 100%;
+	background-color: black;
 	border-radius: 6px;
 }
 .item4 {
