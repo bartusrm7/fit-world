@@ -110,13 +110,13 @@ function MainContainer() {
 									Calories: <span>2000</span>
 								</p>
 								<p>
-									Proteins: <span>{macroNutrients.proteins}</span>
+									Proteins: <span>{macroNutrientsMax.proteins}</span>
 								</p>
 								<p>
-									Carbohydrates:<span>{macroNutrients.carbs}</span>
+									Carbohydrates:<span>{macroNutrientsMax.carbs}</span>
 								</p>
 								<p>
-									Fats: <span>{macroNutrients.fats}</span>
+									Fats: <span>{macroNutrientsMax.fats}</span>
 								</p>
 							</div>
 						</div>
@@ -132,7 +132,7 @@ function MainContainer() {
 									<p className='progress-macronutrients'>
 										<span
 											className='proteins-component food-component'
-											style={{ width: `${macroNutrients.proteins}%` }}></span>
+											style={{ width: `${macroNutrientsMax.proteins}%` }}></span>
 									</p>
 									Proteins
 								</div>
@@ -140,13 +140,15 @@ function MainContainer() {
 									<p className='progress-macronutrients'>
 										<span
 											className='carbs-component food-component'
-											style={{ width: `${macroNutrients.carbs}%` }}></span>
+											style={{ width: `${macroNutrientsMax.carbs}%` }}></span>
 									</p>
 									Carbohydrates
 								</div>
 								<div>
 									<p className='progress-macronutrients'>
-										<span className='fats-component food-component' style={{ width: `${macroNutrients.fats}%` }}></span>
+										<span
+											className='fats-component food-component'
+											style={{ width: `${macroNutrientsMax.fats}%` }}></span>
 									</p>
 									Fats
 								</div>
