@@ -223,23 +223,34 @@ button {
 .progress-macronutrients {
 	display: flex;
 	margin: 5px 0;
-	padding: 2px;
+	padding: 4px;
 	width: 130px;
 	height: 20px;
 	background-color: white;
 	box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.15), -1px -1px 10px -1px rgba(0, 0, 0, 0.7);
-	border-radius: 6px;
+	border-radius: 8px;
 	overflow: hidden;
 }
 .food-component {
 	height: 100%;
 	background-color: black;
-	border-radius: 6px;
+	border-radius: 5px;
 }
 .item4 {
+	position: relative;
 	grid-row: 4/7;
 	grid-column: 5/8;
 	background-color: #ff4a4a;
+}
+.burned-calories-container {
+}
+.burned-calories-btn {
+	position: absolute;
+	bottom: 5px;
+	left: 50%;
+	padding: 0.2em 0.6em;
+	transform: translateX(-50%);
+	cursor: pointer;
 }
 .item5 {
 	grid-row: 7/12;

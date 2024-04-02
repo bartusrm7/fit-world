@@ -15,14 +15,35 @@ function MainContainer() {
 		carbs: 250,
 		fats: 50,
 	});
-
-	function updateMarcoNutrients(addedCalories) {
-		// const addedProteins =
-		// const addedCarbs =
-		// const addedFats =
-	}
-
+	const initialProteinsValue = 120;
+	const initialCarbsValue = 250;
+	const initialFatsValue = 50;
 	const percentCaloriesConsumed = Math.round((caloriesConsumed / caloriesNeeded) * 100);
+	function updateMarcoNutrients(addedCalories) {
+		const { proteins, carbs, fats } = macroNutrientsMax;
+
+		const proteinsRatio = proteins / caloriesNeeded;
+		const carbsRatio = carbs / caloriesNeeded;
+		const fatsRatio = fats / caloriesNeeded;
+
+		const addedProteins = proteinsRatio * addedCalories;
+		const addedCarbs = carbsRatio * addedCalories;
+		const addedFats = fatsRatio * addedCalories;
+
+		setBasicMacroAmount(prevState => ({
+			...prevState,
+			proteins: prevState.proteins + addedProteins,
+			carbs: prevState.carbs + addedCarbs,
+			fats: prevState.fats + addedFats,
+		}));
+
+		setMacroNutrientsMax(prevState => ({
+			...prevState,
+			proteins: Math.round(prevState.proteins + addedProteins),
+			carbs: Math.round(prevState.carbs + addedCarbs),
+			fats: Math.round(prevState.fats + addedFats),
+		}));
+	}
 	function calculateProgress() {
 		return (caloriesConsumed / caloriesNeeded) * 100;
 	}
@@ -43,6 +64,7 @@ function MainContainer() {
 			setFood([...food, data[0]]);
 			setFoodInput("");
 
+			updateMarcoNutrients(addedCalories);
 			setCaloriesConsumed(caloriesConsumed + addedCalories);
 		} catch (error) {
 			console.error("Error searching the food:", error);
@@ -110,13 +132,13 @@ function MainContainer() {
 									Calories: <span>2000</span>
 								</p>
 								<p>
-									Proteins: <span>{macroNutrientsMax.proteins}</span>
+									Proteins: <span>{initialProteinsValue}</span>
 								</p>
 								<p>
-									Carbohydrates:<span>{macroNutrientsMax.carbs}</span>
+									Carbohydrates:<span>{initialCarbsValue}</span>
 								</p>
 								<p>
-									Fats: <span>{macroNutrientsMax.fats}</span>
+									Fats: <span>{initialFatsValue}</span>
 								</p>
 							</div>
 						</div>
@@ -132,7 +154,8 @@ function MainContainer() {
 									<p className='progress-macronutrients'>
 										<span
 											className='proteins-component food-component'
-											style={{ width: `${macroNutrientsMax.proteins}%` }}></span>
+											style={{ width: `${basicMacroAmount.proteins}%` }}
+											onChange={() => updateMarcoNutrients(setMacroNutrientsMax())}></span>
 									</p>
 									Proteins
 								</div>
@@ -140,7 +163,7 @@ function MainContainer() {
 									<p className='progress-macronutrients'>
 										<span
 											className='carbs-component food-component'
-											style={{ width: `${macroNutrientsMax.carbs}%` }}></span>
+											style={{ width: `${basicMacroAmount.carbs}%` }}></span>
 									</p>
 									Carbohydrates
 								</div>
@@ -148,7 +171,7 @@ function MainContainer() {
 									<p className='progress-macronutrients'>
 										<span
 											className='fats-component food-component'
-											style={{ width: `${macroNutrientsMax.fats}%` }}></span>
+											style={{ width: `${basicMacroAmount.fats}%` }}></span>
 									</p>
 									Fats
 								</div>
@@ -164,6 +187,12 @@ function MainContainer() {
 					</div>
 					<div className='main-grid-items item4'>
 						<span className='label-of-main-window-parts'>Burned Calories</span>
+						<div className='burned-calories-container'>
+							<ul>
+								<li></li>
+							</ul>
+							<button className='burned-calories-btn'>Add activity</button>
+						</div>
 					</div>
 					<div className='main-grid-items item5'>
 						<span className='label-of-main-window-parts'>Favorites Meal</span>
