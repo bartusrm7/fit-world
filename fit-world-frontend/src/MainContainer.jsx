@@ -19,29 +19,25 @@ function MainContainer() {
 	const initialCarbsValue = 250;
 	const initialFatsValue = 50;
 	const percentCaloriesConsumed = Math.round((caloriesConsumed / caloriesNeeded) * 100);
-	function updateMarcoNutrients(addedCalories) {
+	function updateMacroNutrients(proteinsAmount, carbsAmount, fatsAmount) {
 		const { proteins, carbs, fats } = macroNutrientsMax;
 
-		const proteinsRatio = proteins / caloriesNeeded;
-		const carbsRatio = carbs / caloriesNeeded;
-		const fatsRatio = fats / caloriesNeeded;
-
-		const addedProteins = proteinsRatio * addedCalories;
-		const addedCarbs = carbsRatio * addedCalories;
-		const addedFats = fatsRatio * addedCalories;
+		const proteinsPercente = (proteinsAmount / proteins) * 100;
+		const carbsPercente = (carbsAmount / carbs) * 100;
+		const fatsPercente = (fatsAmount / fats) * 100;
 
 		setBasicMacroAmount(prevState => ({
 			...prevState,
-			proteins: prevState.proteins + addedProteins,
-			carbs: prevState.carbs + addedCarbs,
-			fats: prevState.fats + addedFats,
+			proteins: prevState.proteins + proteinsAmount,
+			carbs: prevState.carbs + carbsAmount,
+			fats: prevState.fats + fatsAmount,
 		}));
 
 		setMacroNutrientsMax(prevState => ({
 			...prevState,
-			proteins: Math.round(prevState.proteins + addedProteins),
-			carbs: Math.round(prevState.carbs + addedCarbs),
-			fats: Math.round(prevState.fats + addedFats),
+			proteins: Math.round(prevState.proteins + proteinsPercente),
+			carbs: Math.round(prevState.carbs + carbsPercente),
+			fats: Math.round(prevState.fats + fatsPercente),
 		}));
 	}
 	function calculateProgress() {
@@ -60,11 +56,13 @@ function MainContainer() {
 			}
 			const data = await response.json();
 			const addedCalories = data[0].calories;
+			const proteinsAmount = data[0].protein_g;
+			const carbsAmount = data[0].carbohydrates_total_g;
+			const fatsAmount = data[0].fat_total_g;
 
 			setFood([...food, data[0]]);
 			setFoodInput("");
-
-			updateMarcoNutrients(addedCalories);
+			updateMacroNutrients(proteinsAmount, carbsAmount, fatsAmount);
 			setCaloriesConsumed(caloriesConsumed + addedCalories);
 		} catch (error) {
 			console.error("Error searching the food:", error);
@@ -80,8 +78,19 @@ function MainContainer() {
 	function removeFood(index) {
 		const removedFood = food[index];
 		const updateFoodList = food.filter((_, i) => i !== index);
+
 		setFood(updateFoodList);
 		setCaloriesConsumed(caloriesConsumed - removedFood.calories);
+
+		const proteinsToRemove = removedFood.protein_g;
+		const carbsToRemove = removedFood.carbohydrates_total_g;
+		const fatsToRemove = removedFood.fat_total_g;
+
+		setBasicMacroAmount(prevState => ({
+			proteins: prevState.proteins - proteinsToRemove,
+			carbs: prevState.carbs - carbsToRemove,
+			fats: prevState.fats - fatsToRemove,
+		}));
 	}
 	function useEnterKey(e) {
 		if (e.key === "Enter") {
@@ -154,8 +163,7 @@ function MainContainer() {
 									<p className='progress-macronutrients'>
 										<span
 											className='proteins-component food-component'
-											style={{ width: `${basicMacroAmount.proteins}%` }}
-											onChange={() => updateMarcoNutrients(setMacroNutrientsMax())}></span>
+											style={{ width: `${basicMacroAmount.proteins}%` }}></span>
 									</p>
 									Proteins
 								</div>
@@ -188,9 +196,7 @@ function MainContainer() {
 					<div className='main-grid-items item4'>
 						<span className='label-of-main-window-parts'>Burned Calories</span>
 						<div className='burned-calories-container'>
-							<ul>
-								<li></li>
-							</ul>
+							<ul>{/* <li></li> */}</ul>
 							<button className='burned-calories-btn'>Add activity</button>
 						</div>
 					</div>
